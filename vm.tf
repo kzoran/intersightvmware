@@ -1,24 +1,24 @@
 data "vsphere_datacenter" "dc" {
-  name = "MarkpsmiDC"
+  name = var.vm_name
 }
 
 data "vsphere_datastore" "datastore" {
-  name          = "UCSDMarksmiBIGDS292"
+  name          = var.datastore_name
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
 data "vsphere_compute_cluster" "cluster" {
-  name          = "MarkpsmiCL"
+  name          = var.cluster_name
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
 data "vsphere_network" "network" {
-  name          = "VM Network"
+  name          = var.vm_network
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
 data "vsphere_virtual_machine" "template" {
-  name          = "CentOS7-Temp"
+  name          = var.vm_template_name
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
@@ -40,7 +40,6 @@ disk {
     size             = "100"
     eagerly_scrub    = data.vsphere_virtual_machine.template.disks.0.eagerly_scrub
     thin_provisioned = data.vsphere_virtual_machine.template.disks.0.thin_provisioned
-  
   }
   clone {
     template_uuid = data.vsphere_virtual_machine.template.id
