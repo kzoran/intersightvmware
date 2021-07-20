@@ -33,7 +33,7 @@ resource "vsphere_virtual_machine" "vm" {
 
     network_interface {
     network_id   = data.vsphere_network.network.id
-  #  adapter_type = "vmxnet3"
+    adapter_type = "vmxnet3"
   }
 disk {
     label            = "disk0"
